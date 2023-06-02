@@ -8,14 +8,14 @@ from statsmodels.tsa.holtwinters import ExponentialSmoothing
 from sklearn.metrics import mean_absolute_error,mean_squared_error
 
 # Load Data
-data = pd.read_excel(r'C:\Users\Sri Handini\Documents\kuliah\Project\PanganPedia\datapds (1).xlsx', parse_dates=True, index_col='Bulan')
+data = pd.read_excel(r'datapds (1).xlsx', parse_dates=True, index_col='Bulan')
 data['Index'] = data.index
 data.index.freq = 'MS'
-datafevd = pd.read_excel(r'C:\Users\Sri Handini\Documents\kuliah\Project\PanganPedia\datafevd.xlsx')
-datairf = pd.read_excel(r'C:\Users\Sri Handini\Documents\kuliah\Project\PanganPedia\datairf.xlsx')
-datavecm1 = pd.read_excel(r'C:\Users\Sri Handini\Documents\kuliah\Project\PanganPedia\vecmpanjang.xlsx', sheet_name='Sheet2')
-datavecm2 = pd.read_excel(r'C:\Users\Sri Handini\Documents\kuliah\Project\PanganPedia\vecmpanjang.xlsx')
-top3 = pd.read_excel(r'C:\Users\Sri Handini\Documents\kuliah\Project\PanganPedia\top3.xlsx')
+datafevd = pd.read_excel(r'datafevd.xlsx')
+datairf = pd.read_excel(r'datairf.xlsx')
+datavecm1 = pd.read_excel(r'vecmpanjang.xlsx', sheet_name='Sheet2')
+datavecm2 = pd.read_excel(r'vecmpanjang.xlsx')
+top3 = pd.read_excel(r'top3.xlsx')
 #warning
 st.set_option('deprecation.showPyplotGlobalUse', False)
 
