@@ -126,12 +126,16 @@ if menu == "Forecasting":
     mae.metric('MAE', hmae)
     rmse.metric('RMSE', hrmse)
 
-    tren = st.checkbox('Tren')
-    if tren:
-        st.line_chart(trend(df))
-    season = st.checkbox('Seasonal')
-    if season :
-        st.line_chart(seasonal(df))
+    coltren, colsea = st.columns(2)
+    with coltren :
+        tren = st.checkbox('Tren')
+        if tren:
+                st.line_chart(trend(df))
+
+    with colsea :
+        season = st.checkbox('Seasonal')
+        if season :
+            st.line_chart(seasonal(df))
 
 
     col1, col2, col3 = st.columns(3)
