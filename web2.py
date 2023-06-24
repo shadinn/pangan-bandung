@@ -38,6 +38,7 @@ def emmse(df):
     fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mse = mean_squared_error(test, test_predictions)
+    mse = mse/100
     return round(mse, 2)
 
 def emrmse(df):
@@ -48,6 +49,7 @@ def emrmse(df):
     fitted_model = ExponentialSmoothing(train['variabel'],trend='mul', seasonal='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     rmse = np.sqrt(mean_squared_error(test, test_predictions))
+    rmse = rmse/100
     return round(rmse, 2)
 
 def emmae(df):
@@ -58,6 +60,7 @@ def emmae(df):
     fitted_model = ExponentialSmoothing(train['variabel'],trend='mul', seasonal='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mae = mean_absolute_error(test, test_predictions)
+    mae = mae/100
     return round(mae, 2)
 
 def trend(df):
@@ -372,7 +375,7 @@ if menu == "Forecasting":
             forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
-        if pilihan == 'Cabai_Rawit':
+        if pilihan == 'Cabai Rawit':
             final_model = ExponentialSmoothing(data['Cabai_Rawit'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
             forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
