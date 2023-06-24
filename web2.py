@@ -38,7 +38,7 @@ def emmse(df):
     fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mse = mean_squared_error(test, test_predictions)
-    mse = mse/100
+    mse = mse/10000
     return round(mse, 2)
 
 def emrmse(df):
@@ -49,7 +49,7 @@ def emrmse(df):
     fitted_model = ExponentialSmoothing(train['variabel'],trend='mul', seasonal='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     rmse = np.sqrt(mean_squared_error(test, test_predictions))
-    rmse = rmse/100
+    rmse = rmse/1000
     return round(rmse, 2)
 
 def emmae(df):
@@ -60,7 +60,7 @@ def emmae(df):
     fitted_model = ExponentialSmoothing(train['variabel'],trend='mul', seasonal='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mae = mean_absolute_error(test, test_predictions)
-    mae = mae/100
+    mae = mae/1000
     return round(mae, 2)
 
 def trend(df):
