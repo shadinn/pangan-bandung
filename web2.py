@@ -357,7 +357,7 @@ if menu == "Forecasting":
             forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
-        if pilihan == 'Daging_Sapi':
+        if pilihan == 'Daging Sapi':
             final_model = ExponentialSmoothing(data['Daging_Sapi'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
             forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
