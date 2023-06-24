@@ -31,7 +31,7 @@ st.sidebar.title("Pangan Pedia")
 menu = st.sidebar.radio("Navigation Menu",["Forecasting","VECM"])
 
 def emmse(df):
-    train_size = 0.7
+    train_size = 0.8
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
