@@ -35,7 +35,7 @@ def emmse(df):
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
-    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal_periods=12).fit()
+    fitted_model = ExponentialSmoothing(train['variabel'],trend='add',seasonal='add',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mse = mean_squared_error(test, test_predictions)
     return round(mse, 2)
@@ -45,7 +45,7 @@ def emrmse(df):
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
-    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal_periods=12).fit()
+    fitted_model = ExponentialSmoothing(train['variabel'],trend='add', seasonal='add',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     rmse = np.sqrt(mean_squared_error(test, test_predictions))
     return round(rmse, 2)
@@ -55,7 +55,7 @@ def emmae(df):
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
-    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal_periods=12).fit()
+    fitted_model = ExponentialSmoothing(train['variabel'],trend='add', seasonal='add',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mae = mean_absolute_error(test, test_predictions)
     return round(mae, 2)
