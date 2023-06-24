@@ -31,17 +31,17 @@ st.sidebar.title("Pangan Pedia")
 menu = st.sidebar.radio("Navigation Menu",["Forecasting","VECM"])
 
 def emmse(df):
-    train_size = 0.8
+    train_size = 0.7
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
-    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
+    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mse = mean_squared_error(test, test_predictions)
     return round(mse, 2)
 
 def emrmse(df):
-    train_size = 0.8
+    train_size = 0.7
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
@@ -51,7 +51,7 @@ def emrmse(df):
     return round(rmse, 2)
 
 def emmae(df):
-    train_size = 0.8
+    train_size = 0.7
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
