@@ -41,7 +41,7 @@ def emmse(df):
     return round(mse, 2)
 
 def emrmse(df):
-    train_size = 0.7
+    train_size = 0.8
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
@@ -51,7 +51,7 @@ def emrmse(df):
     return round(rmse, 2)
 
 def emmae(df):
-    train_size = 0.7
+    train_size = 0.8
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
