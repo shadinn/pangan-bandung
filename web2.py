@@ -200,10 +200,6 @@ if menu == "Forecasting":
             data['HWES2_ADD'] = ExponentialSmoothing(data['Bawang_Putih'],trend='add').fit().fittedvalues
             data['HWES2_MUL'] = ExponentialSmoothing(data['Bawang_Putih'],trend='mul').fit().fittedvalues
             st.line_chart(data=data, x="Index", y=['Bawang_Putih','HWES2_ADD', 'HWES2_MUL'] ,width=0, height=0, use_container_width=True)
-        if pilihan == 'Bawang Merah' :
-            data['HWES2_ADD'] = ExponentialSmoothing(data['Bawang_Merah'],trend='add').fit().fittedvalues
-            data['HWES2_MUL'] = ExponentialSmoothing(data['Bawang_Merah'],trend='mul').fit().fittedvalues
-            st.line_chart(data=data, x="Index", y=['Bawang_Merah','HWES2_ADD', 'HWES2_MUL'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Cabai Rawit' :
             data['HWES2_ADD'] = ExponentialSmoothing(data['Cabai_Rawit'],trend='add').fit().fittedvalues
             data['HWES2_MUL'] = ExponentialSmoothing(data['Cabai_Rawit'],trend='mul').fit().fittedvalues
