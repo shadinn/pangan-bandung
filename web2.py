@@ -318,7 +318,7 @@ if menu == "Forecasting":
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Daging_Ayam','Forecast'] ,width=0, height=0, use_container_width=True)
-        if pilihan == 'Daging_Sapi':
+        if pilihan == 'Daging Sapi':
             final_model = ExponentialSmoothing(data['Daging_Sapi'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
             forecast_predictions = final_model.forecast(steps=10)
             df = pd.DataFrame({'Forecast': forecast_predictions})
