@@ -45,7 +45,7 @@ def emrmse(df):
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
-    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
+    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     rmse = np.sqrt(mean_squared_error(test, test_predictions))
     return round(rmse, 2)
@@ -55,7 +55,7 @@ def emmae(df):
     split_idx = round(len(df)* train_size)
     train = df.iloc[:split_idx]
     test = df.iloc[split_idx:]
-    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
+    fitted_model = ExponentialSmoothing(train['variabel'],trend='mul',seasonal_periods=12).fit()
     test_predictions = fitted_model.forecast(12)
     mae = mean_absolute_error(test, test_predictions)
     return round(mae, 2)
@@ -71,12 +71,8 @@ def seasonal(df):
 
 if menu == "Forecasting":
     st.title('FORECASTING')
-    pilihan = ['IHK','Beras', 'Daging Ayam', 'Daging Sapi', 'Telur Ayam', 'Bawang Putih', 'Bawang Merah', 'Cabai Merah', 'Cabai Rawit', 'Minyak Goreng', 'Gula Pasir']
+    pilihan = ['Beras', 'Daging Ayam', 'Daging Sapi', 'Telur Ayam', 'Bawang Putih', 'Bawang Merah', 'Cabai Merah', 'Cabai Rawit', 'Minyak Goreng', 'Gula Pasir']
     pilihan = st.selectbox('Pilih Data', pilihan)
-    if pilihan == 'IHK' :
-        df = data['IHK']
-        df = {'variabel':df}
-        df = pd.DataFrame(df)
     if pilihan == 'Beras' :
         df = data['Beras']
         df = {'variabel':df}
@@ -145,9 +141,6 @@ if menu == "Forecasting":
         st.subheader('Holts Winters Single Exponential Smoothing ')
         m = 12
         alpha = 1/(2*m)
-        if pilihan == 'IHK' :
-            data['HWES1'] = SimpleExpSmoothing(data['IHK']).fit(smoothing_level=alpha,optimized=False,use_brute=True).fittedvalues
-            st.line_chart(data=data, x="Index", y=['IHK','HWES1'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Beras' :
             data['HWES1'] = SimpleExpSmoothing(data['Beras']).fit(smoothing_level=alpha,optimized=False,use_brute=True).fittedvalues
             st.line_chart(data=data, x="Index", y=['Beras','HWES1'] ,width=0, height=0, use_container_width=True)
@@ -180,10 +173,6 @@ if menu == "Forecasting":
             st.line_chart(data=data, x="Index", y=['Gula_Pasir','HWES1'] ,width=0, height=0, use_container_width=True)
     with col2:
         st.subheader('Holts Winters Double Exponential Smoothing')
-        if pilihan == 'IHK' :
-            data['HWES2_ADD'] = ExponentialSmoothing(data['IHK'],trend='add').fit().fittedvalues
-            data['HWES2_MUL'] = ExponentialSmoothing(data['IHK'],trend='mul').fit().fittedvalues
-            st.line_chart(data=data, x="Index", y=['IHK','HWES2_ADD', 'HWES2_MUL'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Beras' :
             data['HWES2_ADD'] = ExponentialSmoothing(data['Beras'],trend='add').fit().fittedvalues
             data['HWES2_MUL'] = ExponentialSmoothing(data['Beras'],trend='mul').fit().fittedvalues
@@ -227,10 +216,6 @@ if menu == "Forecasting":
 
     with col3:
         st.subheader('Holts Winters Triple Exponential Smoothing')
-        if pilihan == "IHK":
-            data['HWES3_ADD'] = ExponentialSmoothing(data['IHK'],trend='add',seasonal='add',seasonal_periods=12).fit().fittedvalues
-            data['HWES3_MUL'] = ExponentialSmoothing(data['IHK'],trend='mul',seasonal='mul',seasonal_periods=12).fit().fittedvalues
-            st.line_chart(data=data, x="Index", y=['IHK','HWES3_ADD', 'HWES3_MUL'] ,width=0, height=0, use_container_width=True)
         if pilihan == "Beras":
             data['HWES3_ADD'] = ExponentialSmoothing(data['Beras'],trend='add',seasonal='add',seasonal_periods=12).fit().fittedvalues
             data['HWES3_MUL'] = ExponentialSmoothing(data['Beras'],trend='mul',seasonal='mul',seasonal_periods=12).fit().fittedvalues
@@ -276,137 +261,125 @@ if menu == "Forecasting":
     st.subheader('Forecasting')
     forecast, tabel = st.columns(2)
     with forecast:
-        if pilihan == 'IHK':
-            final_model = ExponentialSmoothing(data['IHK'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
-            df = pd.DataFrame({'Forecast': forecast_predictions})
-            df = pd.concat([data, df], axis=1)
-            df['Bulan'] = df.index
-            st.line_chart(data=df, x="Bulan", y=['IHK','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Minyak Goreng':
-            final_model = ExponentialSmoothing(data['Minyak_Goreng'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Minyak_Goreng'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Minyak_Goreng','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Gula Pasir':
-            final_model = ExponentialSmoothing(data['Gula_Pasir'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Gula_Pasir'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Gula_Pasir','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Bawang Putih':
-            final_model = ExponentialSmoothing(data['Bawang_Putih'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Bawang_Putih'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Bawang_Putih','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Bawang Merah':
-            final_model = ExponentialSmoothing(data['Bawang_Merah'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Bawang_Merah'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Bawang_Merah','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Daging Ayam':
             final_model = ExponentialSmoothing(data['Daging_Ayam'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Daging_Ayam','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Daging Sapi':
-            final_model = ExponentialSmoothing(data['Daging_Sapi'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Daging_Sapi'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Daging_Sapi','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Telur Ayam':
             final_model = ExponentialSmoothing(data['Telur_Ayam'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Telur_Ayam','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Cabai Merah':
-            final_model = ExponentialSmoothing(data['Cabai_Merah'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Cabai_Merah'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Cabai_Merah','Forecast'] ,width=0, height=0, use_container_width=True)
-        if pilihan == 'Cabai_Rawit':
-            final_model = ExponentialSmoothing(data['Cabai_Rawit'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+        if pilihan == 'Cabai Rawit':
+            final_model = ExponentialSmoothing(data['Cabai_Rawit'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Cabai_Rawit','Forecast'] ,width=0, height=0, use_container_width=True)
         if pilihan == 'Beras':
             final_model = ExponentialSmoothing(data['Beras'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             df = pd.concat([data, df], axis=1)
             df['Bulan'] = df.index
             st.line_chart(data=df, x="Bulan", y=['Beras','Forecast'] ,width=0, height=50, use_container_width=True)
     with tabel :
-        if pilihan == 'IHK':
-            final_model = ExponentialSmoothing(data['IHK'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
-            df = pd.DataFrame({'Forecast': forecast_predictions})
-            st.write(df)
         if pilihan == 'Minyak Goreng':
-            final_model = ExponentialSmoothing(data['Minyak_Goreng'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Minyak_Goreng'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Gula Pasir':
-            final_model = ExponentialSmoothing(data['Gula_Pasir'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Gula_Pasir'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Bawang Putih':
-            final_model = ExponentialSmoothing(data['Bawang_Putih'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Bawang_Putih'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Bawang Merah':
-            final_model = ExponentialSmoothing(data['Bawang_Merah'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Bawang_Merah'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Daging Ayam':
-            final_model = ExponentialSmoothing(data['Daging_Ayam'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Daging_Ayam'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Daging_Sapi':
-            final_model = ExponentialSmoothing(data['Daging_Sapi'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Daging_Sapi'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Telur Ayam':
             final_model = ExponentialSmoothing(data['Telur_Ayam'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Cabai Merah':
-            final_model = ExponentialSmoothing(data['Cabai_Merah'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Cabai_Merah'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Cabai_Rawit':
-            final_model = ExponentialSmoothing(data['Cabai_Rawit'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Cabai_Rawit'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
         if pilihan == 'Beras':
-            final_model = ExponentialSmoothing(data['Beras'],trend='mul',seasonal='mul',seasonal_periods=12).fit()
-            forecast_predictions = final_model.forecast(steps=10)
+            final_model = ExponentialSmoothing(data['Beras'],trend='mul',seasonal_periods=12).fit()
+            forecast_predictions = final_model.forecast(steps=12)
             df = pd.DataFrame({'Forecast': forecast_predictions})
             st.write(df)
 
